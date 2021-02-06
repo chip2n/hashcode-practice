@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+
 from pprint import pprint
 import sys
 two, three, four = [0, 0 , 0]
@@ -6,13 +7,33 @@ path = sys.argv[1]
 
 def main():
     pizza = parse_input(path)
-    output = naive_solution(pizza)
-    pprint(pizza)
-    print(output)
+    output = attempt2(pizza)
+    #pprint(pizza)
+    #print(output)
     print(score(output, path))
 
-def naive_solution(pizza):
+    outputify(output)
+
+def outputify(output):
+   name = path.split('/')[-1]
+   with open("output/" + name, "w") as f:
+       f.write(output)
+
+def attempt1(pizza):
+    "Largest teams first, first pizza first :D"
     teams = [4]*four+[3]*three+[2]*two
+    pizza_idx = 0
+    output = []
+    for t in teams:
+        if pizza_idx + t > len(pizza):
+            continue
+        output.append(f'{t} ' + " ".join([str(x) for x in range(pizza_idx, pizza_idx+t)]))
+        pizza_idx += t
+    return f"{len(output)}\n" + "\n".join(output)
+
+def attempt2(pizza):
+    "Smallest team first, first pizza first :D"
+    teams = [2]*two+[3]*three+[4]*four
     pizza_idx = 0
     output = []
     for t in teams:
