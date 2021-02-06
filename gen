@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e
+
 ./main.py input/a_example
 ./main.py input/b_little_bit_of_everything.in
 ./main.py input/c_many_ingredients.in

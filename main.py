@@ -1,16 +1,27 @@
 #!/usr/bin/env python3
 
 from pprint import pprint
+import locale
+import random
 import sys
+from decimal import Decimal
+
+locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')
+
 two, three, four = [0, 0 , 0]
 path = sys.argv[1]
 
+def f(d):
+   return '{0:n}'.format(d)
+
 def main():
     pizza = parse_input(path)
-    output = attempt2(pizza)
+    output = attempt3(pizza)
     #pprint(pizza)
     #print(output)
-    print(score(output, path))
+    #print(locale.format(score(pizza, output)))
+    print(f"{score(pizza, output):,}")
+    #print(locale.format_string("%d", score(pizza, output), grouping=True))
 
     outputify(output)
 
@@ -43,6 +54,21 @@ def attempt2(pizza):
         pizza_idx += t
     return f"{len(output)}\n" + "\n".join(output)
 
+def attempt3(pizzas):
+    pizza_idxs = [x[0] for x in enumerate(pizzas)]
+    sorted_pizza_idx = sorted(pizza_idxs, key=lambda i: len(pizzas[i]), reverse=False)
+
+    teams = [4]*four+[3]*three+[2]*two
+    pizza_idx = 0
+    output = []
+    for t in teams:
+        if pizza_idx + t > len(pizzas):
+            continue
+        output.append(f'{t} ' + " ".join([str(sorted_pizza_idx[x]) for x in range(pizza_idx, pizza_idx+t)]))
+        pizza_idx += t
+
+    return f"{len(output)}\n" + "\n".join(output)
+
 def parse_input(path):
     global two, three, four
     with open(path) as f:
@@ -53,8 +79,7 @@ def parse_input(path):
             pizzas.append(set(line.strip().split(" ")[1:]))
     return pizzas
             
-def score(string, path):
-    pizza = parse_input(path)
+def score(pizza, string):
     lines = string.split("\n")
     rows = int(lines[0])
     lines = [x for x in lines[1:] if x]
