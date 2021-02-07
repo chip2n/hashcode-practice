@@ -13,14 +13,13 @@ path = sys.argv[1]
 
 def main():
     pizza = parse_input(path)
-    output = attempt4greedy(pizza)
-    #pprint(pizza)
-    #print(output)
-    #print(locale.format(score(pizza, output)))
-    print(f"{score(pizza, output):,}")
-    #print(locale.format_string("%d", score(pizza, output), grouping=True))
-
-    outputify(output)
+    pizza_strings = [' '.join(sorted(list(p))) for p in pizza]
+    print(f"pizza count: {len(pizza)}")
+    print(f"unique pizza count: {len(set(pizza_strings))}")
+    
+    ingredients = {ingredient for p in pizza for ingredient in p}
+    print("unique ingredients: " + str(len(ingredients)))
+    print("biggest ingredient number: " + str(2**len(ingredients)))
 
 def outputify(output):
    name = path.split('/')[-1]
