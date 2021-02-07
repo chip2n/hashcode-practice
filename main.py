@@ -13,8 +13,8 @@ path = sys.argv[1]
 
 def main():
     pizza = parse_input(path)
-    output = attempt4greedy(pizza)
-    #pprint(pizza)
+    output = attempt5(pizza)
+
     #print(output)
     #print(locale.format(score(pizza, output)))
     print(f"{score(pizza, output):,}")
@@ -87,6 +87,35 @@ def attempt4greedy(pizzas):
         if count % 100 == 0:
             print(f"count: {count}")
         if t > len(poke_bowls):
+            continue
+        selected = best_pizza_combo(t)
+        output.append(f"{t} " + " ".join([str(s) for s in selected]))
+    return f"{len(output)}\n" + "\n".join(output)
+
+def attempt5(pizzas):
+    sorted_pizzas = sorted(enumerate(pizzas), key=lambda x: len(x[1]), reverse=True)
+    def best_pizza_combo(pizza_count):
+        selected = []
+        ingredients = set()
+        for _ in range(0, pizza_count):
+            best = (-1, None, None)
+            for idx, p in enumerate(sorted_pizzas):
+                if len(p[1]) < best[0]:
+                    break
+                score = len(p[1].difference(ingredients))
+                if score >= best[0]:
+                    best = (score, idx, p)
+            selected.append(best[1])
+            ingredients |= best[2][1]
+            del sorted_pizzas[best[1]]
+        return selected
+
+    teams = [4]*four+[3]*three+[2]*two
+    output = []
+    for count, t in enumerate(teams):
+        if count % 100 == 0:
+            print(f"count: {count}")
+        if t > len(sorted_pizzas):
             continue
         selected = best_pizza_combo(t)
         output.append(f"{t} " + " ".join([str(s) for s in selected]))
