@@ -5,24 +5,33 @@ import locale
 import random
 import importlib
 import sys
+from utils import *
+
 from decimal import Decimal
 locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')
 
+import logging
+
 path = sys.argv[1]
 heuristic = sys.argv[2]
+name = path.split('/')[-1]
+
+print = logger.info
+logging.basicConfig(format = f'{name} ({heuristic}): %(message)s')
+logger.setLevel(logging.DEBUG)
 
 def main():
     data = parse_input(path)
     module = importlib.import_module(heuristic)
-    output = module.solve(data)
+    output = timer(module.solve)(data)
 
-    outputify(output)
-    print(f"{score(data, output):,}")
+    s = score(data, output)
+    outputify(output, s)
 
-def outputify(output):
-   name = path.split('/')[-1]
-   with open("output/" + name, "w") as f:
-       f.write(output)
+def outputify(output, score):
+    with open("output/" + name + "----" + str(f"{score:,}").rjust(14, '-') + "---" + heuristic, "w") as f:
+        f.write(output)
+    print(f"Score: {score:,}")
 
 def parse_input(path):
     with open(path) as f:
