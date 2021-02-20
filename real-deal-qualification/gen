@@ -2,8 +2,14 @@
 
 set -e
 
-./main.py input/a_example
-./main.py input/b_little_bit_of_everything.in
-./main.py input/c_many_ingredients.in
-./main.py input/d_many_pizzas.in
-./main.py input/e_many_teams.in
+cd "${BASH_SOURCE%/*}"
+
+heuristic="$1"
+shift
+for input_file in input/*; do
+    echo "$input_file"
+    ./main.py "$input_file" "$heuristic" "$@" &
+done
+
+wait
+echo "Finished $heuristic"
