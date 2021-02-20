@@ -3,6 +3,7 @@
 from pprint import pprint
 import locale
 import random
+import importlib
 import sys
 from decimal import Decimal
 locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')
@@ -12,7 +13,8 @@ heuristic = sys.argv[2]
 
 def main():
     data = parse_input(path)
-    output = solve(data)
+    module = importlib.import_module(heuristic)
+    output = module.solve(data)
 
     outputify(output)
     print(f"{score(data, output):,}")
