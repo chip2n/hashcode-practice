@@ -14,22 +14,27 @@ def solve(D, I, S, streets, car_paths):
     for street in streets:
         intersections[street[1]].append(street[2])
 
-    print(intersections)
+    # print(intersections)
 
-    print(I)
-    res.append(str(I))
+    # print(I)
+    # res.append(str(I))
+
+    num_intersections = 0
     for intersection, istreets in intersections.items():
         if not istreets:
             continue
-        print(intersection)
+
+        total = sum(counter[istreet] for istreet in istreets)
+        if not total:
+            continue
+        num_intersections += 1
         res.append(str(intersection))
-        print(len(istreets))
         res.append(str(len(istreets)))
         for istreet in istreets:
-            count = counter[istreet]
-            print(f"{istreet} {count}")
+            count = max(1, int((counter[istreet] / total) * 2 * len(istreets)))
+            # print(f"{istreet} {count}")
             res.append(f"{istreet} {count}")
-    return "\n".join(res)
+    return "\n".join([str(num_intersections)] + res)
 
 @timer
 def helper():
