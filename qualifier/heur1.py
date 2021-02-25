@@ -13,6 +13,8 @@ def solve(D, I, S, streets, car_paths):
     print(I)
     res.append(str(I))
     for intersection, istreets in intersections.items():
+        if not istreets:
+            continue
         print(intersection)
         res.append(str(intersection))
         print(len(istreets))
