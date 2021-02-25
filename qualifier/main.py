@@ -23,7 +23,7 @@ logger.setLevel(logging.DEBUG)
 def main():
     D, I, S, streets, car_paths = parse_input(path)
     module = importlib.import_module(heuristic)
-    output = timer(module.solve)(streets)
+    output = timer(module.solve)(D, I, S, streets, car_paths)
 
     s = score(streets, car_paths, output)
     outputify(output, s)
@@ -48,7 +48,7 @@ def parse_input(path):
             car_data[0] = int(car_data[0])
             car_paths.append(tuple(car_data))
 
-    return D, I, S, transform_streets(streets), transform_car_paths(car_paths)
+    return D, I, S, streets, car_paths
 
 def transform_streets(streets):
     result = dict()
