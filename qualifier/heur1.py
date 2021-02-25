@@ -6,7 +6,7 @@ def solve(D, I, S, streets, car_paths):
     intersections = {k: list() for k in range(I)}
 
     for street in streets:
-        intersections[street[0]].append(street[2])
+        intersections[street[1]].append(street[2])
 
     print(intersections)
 
