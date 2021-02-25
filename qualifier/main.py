@@ -21,11 +21,11 @@ logging.basicConfig(format = f'{name} ({heuristic}): %(message)s')
 logger.setLevel(logging.DEBUG)
 
 def main():
-    data = parse_input(path)
+    streets, car_paths = parse_input(path)
     module = importlib.import_module(heuristic)
-    output = timer(module.solve)(data)
+    output = timer(module.solve)(streets)
 
-    s = score(data, output)
+    s = score(streets, car_paths, output)
     outputify(output, s)
 
 def outputify(output, score):
@@ -35,14 +35,23 @@ def outputify(output, score):
 
 def parse_input(path):
     with open(path) as f:
-        i1, i2, i3 = [int(x) for x in f.readline().strip().split(" ")]
+        D, I, S, V, F = [int(x) for x in f.readline().strip().split(" ")]
 
-        data = []
-        for line in f:
-            data.append(set(line.strip().split(" ")[1:]))
-    return pizzas
+        streets = []
+        car_paths = []
+
+        for street_no in range(S):
+            start, end, name, length = f.readline().strip().split(" ")
+            streets.append((int(start), int(end), name, street_no, int(length)))
+        for car_no in range(V):
+            car_data = f.readline().strip().split(" ")
+            car_data[0] = int(car_data[0])
+            car_paths.append(tuple(car_data))
+
+    return streets, car_paths
             
-def score(data, string):
+def score(streets, car_paths, string):
+    return 0
     lines = string.split("\n")
     rows = int(lines[0])
     lines = [x for x in lines[1:] if x]
@@ -53,5 +62,6 @@ def score(data, string):
                 for xx in data[int(x)]])
         intermediate_score+=len(unique)**2
     return intermediate_score
+
 
 main()
