@@ -13,3 +13,5 @@ done
 
 wait
 echo "Finished $heuristic"
+
+zip -q -r code * -x input/* -x output/*
