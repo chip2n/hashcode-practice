@@ -40,10 +40,10 @@ def parse_input(path):
         streets = []
         car_paths = []
 
-        for street_no in range(S):
+        for _ in range(S):
             start, end, name, length = f.readline().strip().split(" ")
-            streets.append((int(start), int(end), name, street_no, int(length)))
-        for car_no in range(V):
+            streets.append((int(start), int(end), name, int(length)))
+        for _ in range(V):
             car_data = f.readline().strip().split(" ")
             car_data[0] = int(car_data[0])
             car_paths.append(tuple(car_data))
