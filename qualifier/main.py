@@ -52,7 +52,7 @@ def parse_input(path):
 
 def transform_streets(streets):
     result = dict()
-    for [start, end, name, street_no, length] in streets:
+    for [start, end, name, length] in streets:
         result[name] = {
             "start_intersection": start,
             "end_intersection": end,
