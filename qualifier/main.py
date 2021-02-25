@@ -49,7 +49,7 @@ def parse_input(path):
             car_paths.append(tuple(car_data))
 
     return streets, car_paths
-            
+
 def score(streets, car_paths, string):
     return 0
     lines = string.split("\n")
