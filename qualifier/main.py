@@ -21,7 +21,7 @@ logging.basicConfig(format = f'{name} ({heuristic}): %(message)s')
 logger.setLevel(logging.DEBUG)
 
 def main():
-    streets, car_paths = parse_input(path)
+    D, I, S, streets, car_paths = parse_input(path)
     module = importlib.import_module(heuristic)
     output = timer(module.solve)(streets)
 
@@ -48,8 +48,8 @@ def parse_input(path):
             car_data[0] = int(car_data[0])
             car_paths.append(tuple(car_data))
 
-    return streets, car_paths
-
+    return D, I, S, streets, car_paths
+            
 def score(streets, car_paths, string):
     return 0
     lines = string.split("\n")
