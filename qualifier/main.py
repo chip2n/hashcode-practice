@@ -48,8 +48,23 @@ def parse_input(path):
             car_data[0] = int(car_data[0])
             car_paths.append(tuple(car_data))
 
-    return D, I, S, streets, car_paths
-            
+    return D, I, S, transform_streets(streets), transform_car_paths(car_paths)
+
+def transform_streets(streets):
+    result = dict()
+    for [start, end, name, street_no, length] in streets:
+        result[name] = {
+            "start_intersection": start,
+            "end_intersection": end,
+            "length": length,
+        }
+    return result
+
+def transform_car_paths(paths):
+    for p in paths:
+        p = path[1:]
+    return paths
+
 def score(streets, car_paths, string):
     return 0
     lines = string.split("\n")
