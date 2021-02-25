@@ -61,9 +61,10 @@ def transform_streets(streets):
     return result
 
 def transform_car_paths(paths):
+    result = []
     for p in paths:
-        p = path[1:]
-    return paths
+        result.append(p[1:])
+    return result
 
 def score(streets, car_paths, string):
     return 0
