@@ -3,6 +3,12 @@ from collections import Counter
 print = logger.info
 
 def solve(D, I, S, streets, car_paths):
+    """
+    disclaimer: I dont understand the motivation of the signal time of each street
+    create frequency list of streets based on cars first paths. Then sort 
+    intersections based on that frequency list.
+    Then assign signal time based on the frequency
+    """
     res= []
     intersections = {k: list() for k in range(I)}
 

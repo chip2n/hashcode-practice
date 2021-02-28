@@ -3,6 +3,10 @@ from collections import Counter
 print = logger.info
 
 def solve(D, I, S, streets, car_paths):
+    """special code for solving input data d
+    input data d contains a special intersection where majority of all
+    traffic goes through
+    """
     res= []
     intersections = {k: list() for k in range(I)}
 

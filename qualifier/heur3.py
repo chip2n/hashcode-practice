@@ -3,6 +3,9 @@ from collections import Counter
 print = logger.info
 
 def solve(D, I, S, streets, car_paths):
+    """Give each street at least 1 second, but some gets more based on weight
+    uses scale=3
+    """
     res= []
     intersections = {k: list() for k in range(I)}
 

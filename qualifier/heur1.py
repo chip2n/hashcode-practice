@@ -2,6 +2,7 @@ from utils import *
 print = logger.info
 
 def solve(D, I, S, streets, car_paths):
+    """Fairly give every street in the intersection 1 second of green light"""
     res= []
     intersections = {k: list() for k in range(I)}
 

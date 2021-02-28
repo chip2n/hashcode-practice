@@ -3,10 +3,15 @@ from collections import Counter
 print = logger.info
 
 def solve(D, I, S, streets, car_paths):
+    """Give each street at least 1 second, but some gets more based on weight
+    uses scale=2
+    Also turn off streets where traffic is less than 10%
+    """
     res= []
     intersections = {k: list() for k in range(I)}
 
     counter = Counter({})
+    # count street frequency
     for p in car_paths:
         for s in p[1:]:
             counter[s] += 1
@@ -17,11 +22,15 @@ def solve(D, I, S, streets, car_paths):
     num_intersections = 0
     for intersection, istreets in intersections.items():
         if not istreets:
+        # micro optimization ignore empty intersections
+        # probably guard for correct output format
             continue
 
         intersection_counts = [ counter[istreet] for istreet in istreets ]
         total = sum(intersection_counts)
         if not total:
+            # micro optimization if no car drives through the intersection
+            # probably guard for correct output format
             continue
 
         output_streets = []
